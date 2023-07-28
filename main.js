@@ -1,457 +1,153 @@
-"uii"
-importClass(java.lang.Integer);
-importClass(android.util.Log);
-let console_floaty = floaty.rawWindow(
-  <card cardCornerRadius="10" cardBackgroundColor="#00000000" cardElevation="0">
-    <horizontal id="root" padding="10dp" marginBottom="20dp">
-      <com.stardust.autojs.core.console.ConsoleView id="console" h="*" w="*" />
-      {/* 这里可以在右侧加入自己需要的东西 */}
-    </horizontal>
-  </card>
+"ui";
+
+ui.layout(
+    <frame>
+        <vertical bg="#eef2fb">
+            <appbar>
+                <toolbar id="toolbar" bg="#FFC0CB" title="测码助手" />
+                {/* <tabs id="tabs" bg="#01C7FE" /> */}
+            </appbar>
+            <horizontal >
+                <Switch id="autoService" text="无障碍服务" checked="{{auto.service != null}}" textSize="15sp" />
+                <Switch margin="12 0" id="floatyService" text="悬浮窗权限" checked="{{(new android.provider.Settings).canDrawOverlays(context)}}" />
+            </horizontal>
+            <horizontal w="*" h="1sp" margin="0 10 0 0" bg='#E2E2E2'></horizontal>     //透明条
+            <viewpager id="viewpager">
+                <ScrollView>
+                    <vertical>
+                        <horizontal w="*" h="1sp" margin="0 10 0 0" bg='#E2E2E2'></horizontal>     //透明条
+                        <horizontal w="*" h="1sp" margin="0 10 0 0" bg='#E2E2E2'></horizontal>     //透明条
+                        <linear >
+                            <button text="下载本月脚本" id="download" />
+                            <text id="loadyes" text="已解析✅" />
+                            <text id="loadno" text="未解析❌" />
+                            <button text="刷" id="downloadf5" />
+                            <button text="卸" id="deletedown" />
+                            <button text="adb" id="adb" />
+                        </linear>
+                        <button id="START" text="开始" textSize="28sp" />
+                    </vertical>
+                </ScrollView>
+                {/* <ScrollView>//
+                <vertical padding="16">
+                    <frame height="200" gravity="center">
+                        <linear>
+                            <text textSize="22sp" textColor="black" text="账号文本: " /> <input id="账号文本" text="" hint="账号----密码" />
+                        </linear>
+                    </frame>
+                </vertical>
+            </ScrollView> */}
+
+            </viewpager>
+        </vertical>
+        {/* <fab id="add" w="auto" h="auto" src="@drawable/ic_vpn_key_black_48dp"
+            margin="16" layout_gravity="bottom|right" tint="#ffffff" /> */}
+    </frame>
+
 );
-let console_floaty_options = {
-  gravity: "bottom", //位置，可选值:top、bottom 默认值:bottom
-  size: "middle", //大小，可选值:small、middle、big 默认值:middle
-  alpha: 0.5, //透明度，可选值:0.0-1.0 默认值:0.6
-  frontColor: "#00ff00", //文字颜色，可选值:颜色代码 默认值:"#ffffff"
-  frontSize: 15, //文字大小，单位sp，可选值:0+ 默认值:16
-};
-ui.post(() => {
-  let scale = 0.25;
-  switch (console_floaty_options.size) {
-    case "small":
-      scale = 0.1;
-      break;
-    case "big":
-      scale = 0.5;
-    default:
-      break;
-  }
-  let bg = colors.parseColor("#66000000");
-  if (console_floaty_options.alpha < 1 && console_floaty_options.alpha > 0) bg = colors.parseColor("#" + parseInt(console_floaty_options.alpha * 255).toString(16) + "000000");
-  console_floaty.setSize(device.width, device.height * scale);
-  console_floaty.setPosition(0, console_floaty_options.gravity == "top" ? 0 : device.height * (1 - scale));
-  console_floaty.root.setBackgroundColor(bg);
-  console_floaty.setTouchable(false);
-  initConsoleView(console_floaty.console, console_floaty_options.frontColor || "#ffffff");
+
+
+
+ui.loadyes.setVisibility(android.view.View.INVISIBLE);
+ui.loadno.setVisibility(android.view.View.VISIBLE);
+
+
+ui.START.on("click", function () {
+    engines.execScriptFile("xfc.js")
 });
 
-function initConsoleView(view, color) {
-  view.setConsole(runtime.console);
-  // 设置控制台字体颜色
-  let sparseArray = new android.util.SparseArray();
-  sparseArray.put(Log.DEBUG, new Integer(colors.parseColor("#FFFFFF")));
-  sparseArray.put(Log.ERROR, new Integer(colors.parseColor("#ff0000")));
-  sparseArray.put(Log.INFO, new Integer(colors.parseColor(color)));
-  sparseArray.put(Log.WARN, new Integer(colors.parseColor("#ff0000")));
-  view.setColors(sparseArray);
-  const packageName = context.getPackageName()
-  const logId = context.getResources().getIdentifier("input_container", "id", packageName == "org.autojs.autoxjs.v6" ? packageName : "org.autojs.autoxjs.inrt");
-  // const logId = context.packageName == "org.autojs.autoxjs.v6" ? 0x7f09018c : 0x7f0900f6;
-  view.findViewById(logId).setVisibility(8);
-};
 
 
-
-
-auto.waitFor();
-//console.show();
-
-
-//显示当前时分秒
-//function formatDate() {
-//var year = d.getFullYear();
-//var month = d.getMonth() + 1;
-//var date = d.getDate();
-//var hour = d.getHours();
-//var day = d.getDay()
-//var minute = d.getMinutes();
-//var second = d.getSeconds();
-//var millisecond = d.getMilliseconds();
-//var 时间 = （ year + "-" + month + "-" + date + " " + hour + ":" + minute + ":" + second + ":" + millisecond）;
-//}
-//console.log(时间)
-//
-
-//显示当前时间
-var d = new Date();
-console.log(d)
-//
-
-//获取实时时间戳
-function timestamp() {
-  var d = new Date
-  var hour = d.getHours();
-  var minute = d.getMinutes();
-  var second = d.getSeconds();
-  var millisecond = d.getMilliseconds();
-  var t = (hour + ":" + minute + ":" + second + ":" + millisecond);
-
-  //return t
-  console.log(t)
-}
-//
-
-// 获取时分秒用于记录日志
-function logWithTime(msg) {
-  timestamp() + console.info(" " + msg);
-}
-//
-
-//向上滑动
-function upslide() {
-  var c = device.width;
-  var b = device.height;
-  toast("正在滑动")
-  swipe(c / 2, b / 10 * 9, c / 2, b / 10, 500);
-}
-//
-
-//解锁手机
-if (!device.isScreenOn()) {
-  toast("正在唤醒");
-  logWithTime("正在唤醒");
-  device.wakeUp();
-  sleep(500);
-
-  sleep(500);
-
-} else {
-  toast("未锁屏");
-  logWithTime("未锁屏");
-}
-//
-
-//解锁应用锁
-function unlock() {
-  if (packageName("com.miui.securitycenter").exists()) {
-    logWithTime("检测到应用锁");
-    if (id("lockPattern").exists()) {
-      logWithTime("检测到密码验证");
-      logWithTime("正在验证");
-      //gesture(延迟(多手势) , 持续时间 , 点1 ，点2 ， ......)
-    } else {
-      logWithTime("非密码验证")
-      logWithTime("正在寻找切换")
-      //此处需要增加两个个浏览近期任务recents()动作
-      sleep(500)
-      recents()
-      sleep(500)
-      recents()
-      id("finger_password_switch").findOne().click()
-      logWithTime("正在切换密码验证");
-      id("lockPattern").findOne();
-      logWithTime("正在验证")
-    }
-    sleep(1000)
-    gesture(1250, [335, 2360], [710, 1975], [1105, 1975], [1105, 2360], [1105, 2745], [710, 2745], [335, 2745], [710, 2360], [335, 1975])
-    logWithTime("验证成功")
-  } else {
-    logWithTime("未发现应用锁")
-  }
-}
-sleep(2000)
-//
-const tiku = [
-
-  { "q": "学生在读期间因私出市的,应提前( )个工作日填写《上海公安学院学生因私出市、出国(境)申请登记表》。", "a": "C", "F": "", "E": "", "D": "六", "C": "五", "B": "四", "A": "三" },
-  { "q": "学生在读期间因私出市的,填写《上海公安学院学生因私出市、出国(境)申请登记表》后,由( )签署意见,经所在部门审核,报学管处审批。", "a": "A", "F": "", "E": "", "D": "辅导员", "C": "大队", "B": "值班大队长", "A": "中队" },
-  { "q": "申诉委员会的办事机构挂靠在校( ),负责受理学生申诉及申诉申诉委员会安排的其他工作。", "a": "C", "F": "", "E": "", "D": "学生管理大队", "C": "学管处", "B": "考试中心", "A": "教务处" },
-  { "q": "学生提出申诉申请,应在接到学校处理、处分决定书之日起( )内,向申诉委员会提出书面申请。逾期不再受理。", "a": "A", "F": "", "E": "", "D": "30日", "C": "半个月", "B": "15", "A": "10" },
-  { "q": "处理、处分或者复查决定书未告知学生申诉期限的,申诉期限自学生知道或者应当知道处理或者处分决定之日起计算,但最长不得超过( )。", "a": "B", "F": "", "E": "", "D": "十二个月", "C": "九个月", "B": "六个月", "A": "三个月" },
-  { "q": "公共部位学生打扫时间为上、下午各一次,具体时间为( )。", "a": "C", "F": "", "E": "", "D": "无具体时间", "C": "7:55—8:10、13:20—13:35", "B": "7:50—8:15、13:20—13:35", "A": "7:55—8:10、13:10—13:35" },
-  { "q": "学生请事假、病假48小时(含)以内的,由辅导员、大队长、专业系领导逐级审核、并报( )审批。", "a": "B", "F": "", "E": "", "D": "专业系领导", "C": "分管院领导", "B": "学管处领导", "A": "大队" },
-  { "q": "学生因病需外出就诊的,一律凭校医务室转院就诊凭证到( )办理请假手续。外出就诊时间以病假计", "a": "C", "F": "", "E": "", "D": "学管处", "C": "大队", "B": "中队", "A": "辅导员处" },
-  { "q": "学生因公请假影响正常教学二日以上的,由( )提出申请,经学院管理处审核,报院领导审批,并向教学质量评估中心备案", "a": "A", "F": "", "E": "", "D": "值班大队干部", "C": "辅导员", "B": "学生本人", "A": "借调部门" },
-  { "q": "因公请假每学年累计不得超过( )周。(100课时)", "a": "C", "F": "", "E": "", "D": "五", "C": "四", "B": "三", "A": "二" },
-  { "q": "上海公安学院学生申诉处理办法,依据( )和上海公安学院的有关规定制定。", "a": "A", "F": "", "E": "", "D": "《上海公安机关内务管理规范》", "C": "《上海公安学院学生警务化管理规定》", "B": "《上海公安学院学生学籍管理办法》", "A": "《普通高等学校学生管理规定》" },
-  { "q": "申诉委员会采取表决方式形成复查结论。申诉委员会作出复查结论时应有( )以上委员参加表决,有超过半数委员同意才有效。", "a": "B", "F": "", "E": "", "D": "", "C": "三分之一<br>B.四分之一", "B": "三分之二", "A": "二分之一" },
-  { "q": "申诉申请必须由学生本人当面提交给申诉委员会办事机构或采用( )方式提交。", "a": "A", "F": "", "E": "", "D": "转交", "C": "短信", "B": "传讯", "A": "邮寄" },
-  { "q": "学生因公请假影响正常教学( )日(含)以内的,或不影响正常教学的,由借调部门提出提出申请,报学院管理处审批,并向教学质量评估中心备案。", "a": "B", "F": "", "E": "", "D": "四", "C": "三", "B": "二", "A": "一" },
-  { "q": "因公请假每学年累计不得超过4周( )", "a": "B", "F": "", "E": "", "D": "140课时", "C": "120课时", "B": "100课时", "A": "80课时" },
-  { "q": "申诉人当面提交申请的,申请日为( )日。", "a": "A", "F": "", "E": "", "D": "第四", "C": "第三", "B": "次", "A": "当" },
-  { "q": "就诊、治疗( )日以上的,根据学生书面申请、医院病假证明(区级以上),大队应按《上海公安学院学生学籍管理办法》《上海公安学院学生警务化管理规定》有关条款,在核实了解情况后,提出休学意见,经所在专业系审核,学管处复核,报分管院领导和院主要领导逐级审批,同时通报教务处。专业系每周向学管处报学生近况。", "a": "D", "F": "", "E": "", "D": "30", "C": "10", "B": "40", "A": "20" },
-  { "q": "申诉处理委员会成员有:( )。", "a": "ABCD", "F": "", "E": "", "D": "学员管理处", "C": "教务处", "B": "政治处", "A": "院办公室" },
-  { "q": "以下宿舍内务卫生方面,正确的是( )", "a": "BCD", "F": "", "E": "", "D": "椅子统一推到书桌底,整齐摆放。", "C": "抹布实行三折四叠,最多允许放2条抹布", "B": "书籍统一摆放,自下而上按照由大到小、外沿平齐、书籍开口向内整齐平放,书架上除教材、书本和规定摆放物品外,禁止存放其他物品。", "A": "装备包统一摆放于床底靠两侧,把手向内,纵向推到最里靠墙,统一有序摆放。" },
-  { "q": "以下内容正确的是( )", "a": "ABCD", "F": "", "E": "", "D": "寝室卫生间无长明灯、无污垢外溢,马桶洁净明亮、无锈迹、无污垢、无异味,地面无积水,台盆无污垢、无杂物、无长流水,浴室玻璃无污垢。", "C": "室内不得随意涂写或钉、贴东西,不得使用电源接线板,不得乱拉绳子、铁丝等物。", "B": "桌面、床架、门窗框、物品架、装备箱、铁皮柜、吊扇开关等物品上均无灰尘,墙角无蛛网,地面保持整洁、无垃圾、无积水。", "A": "纸屑、杂物一律放在寝室簸箕或盥洗室垃圾桶内,不得在寝室内随意乱扔,寝室无人时簸箕必须干净,门、窗应保持清洁明亮。" },
-  { "q": "关于寝室被子、铺面,以下选项正确的是( )", "a": "BCDE", "F": "", "E": "床单边沿平整无皱纹,铺面整洁。", "D": "大檐帽摆放于被子上面中央,帽檐与被子上端前边缘平齐。", "C": "摆放顺序自下而上,依次为垫背、床单、被子。", "B": "被子四折四叠,被面无皱褶、棱角分明,开口两端对齐,前后高度、长短一致。", "A": "被子后墙距床头40厘米,开口对门,摆放距铺面中央、两边距离相等。" },
-  { "q": "以下选项正确的是( )", "a": "ABC", "F": "", "E": "", "D": "离开寝室必须开启所有电源。", "C": "午休和晚上就寝时,外套挂在椅背上,其余衣物按照由外到里的顺序,自下而上叠放整齐摆放于椅子上,鞋子置于铁架旁鞋根朝外。", "B": "离开寝室必须将书柜抽屉、房门上锁,以确保安全。底楼寝室须同时锁好窗户。", "A": "簸箕和扫帚统一置于寝室门后靠墙角,扫帚置于簸箕内,其它卫生工具统一置于盥洗室清洁工具处,分类有序摆放。" },
-  { "q": "关于公共部位卫生,下列说法正确的是( )", "a": "ABCDEF", "F": "公共部位的打扫工具统一摆放在卫生间、盥洗室内。", "E": "垃圾分类:严格按照《上海市生活垃圾管理条例》对垃圾进行分类,学生相互监督,将垃圾投放妥当,垃圾桶内外保持清洁,无外放垃圾。", "D": "晒台:物品晾晒有序,无垃圾、无杂物、无烟蒂。", "C": "活动室:地面、桌面清洁、椅子放置整齐有序、无烟蒂、无积水。", "B": "储物间:地面、储物架、窗台清洁,无长明灯,物品摆放有序,无水果等易变质、腐败食品以及存在安全隐患的物品。", "A": "楼梯、楼道:无积水、无痰迹、无纸屑和杂物、无长明灯,窗台、楼梯、扶手、楼道展板等无灰尘、无蜘蛛网。" },
-  { "q": "就诊、治疗三十日以上的,根据学生书面申请、医院病假证明(区级以上),大队应按《上海公安学院学生学籍管理办法》《上海公安学院学生警务化管理规定》有关条款,在核实了解情况后,提出休学意见,经所在()审核,()复核,报()和()逐级审批。同时通报教务处。专业系每周向学管处报学生近况。( )", "a": "ABCD", "F": "", "E": "", "D": "院主要领导", "C": "分管院领导", "B": "学管处", "A": "专业系" },
-  { "q": "学生根据教学计划参加基层单位实训实习期间需请假的,请假4小时以内(含)的,学生向所在实习点请假,获得同意后,报辅导员备案;请假4小时以上的,应先征得( )同意,再根据以上相关条款办理请假手续。", "a": "CD", "F": "", "E": "", "D": "实习基地(点)带队干部", "C": "基层单位、", "B": "辅导员", "A": "区队长" },
-  { "q": "申诉处理委员会由院领导任主任和副主任,成员由( )等相关职能部门负责人及教官教师、学生代表、负责法律事务的相关机构负责人等共同组成。", "a": "ABCD", "F": "", "E": "", "D": "学管处", "C": "教务处", "B": "政治处(监察室)", "A": "院办公室" },
-  { "q": "申诉申请必须由()()给()或采用()方式提交。( )", "a": "ABCD", "F": "", "E": "", "D": "邮寄", "C": "申诉委员会办事机构", "B": "当面提交", "A": "学生本人" },
-  { "q": "休息日( )不能按时到校,到岗的,学生需事前向大队请假,事后按第三条规定程序及时补办有关网上手续。", "a": "AB", "F": "", "E": "", "D": "因公", "C": "因假", "B": "因事", "A": "因病" },
-  { "q": "学生如有特殊情况确需外出,必须做到( )。未办理请、销假手续的,一律按旷课处理。", "a": "ABCE", "F": "处分", "E": "旷课", "D": "扣分", "C": "及时销假", "B": "按时归队", "A": "事前请假" },
-  { "q": "提出申述申请时必须提交以下材料( ):", "a": "ABC", "F": "", "E": "", "D": "申诉人个人材料及复印件", "C": "申诉人认为需要提交的其他材料", "B": "学校对其作出处理、处分决定的复印件", "A": "由申诉人签名的书面申诉申请书" },
-  { "q": "申诉申请必须由学生本人当面提交给申诉委员会办事机构或采用邮寄方式提交。<br>提出申诉申请时必须提交以下材料:( )", "a": "ABC", "F": "", "E": "", "D": "申诉人的主观个人看法意见。", "C": "申诉人认为需要提交的其他材料;", "B": "学校对其作出处理、处分决定的复印件;", "A": "由申诉人签名的书面申诉申请书;" },
-  { "q": "申诉委员会认为做出处理或者处分的( )等存在不当,可以作出建议撤销或变更的复查意见。", "a": "ABC", "F": "", "E": "", "D": "结果", "C": "程序", "B": "依据", "A": "事实" },
-  { "q": "申诉委员会认为原处理、处分存在下列情况之一的,应建议改变原处理、处分决定:( )", "a": "ABC", "F": "", "E": "", "D": "目的不清晰;", "C": "定性不准确、处分不适当;", "B": "适用依据有错误的;", "A": "程序不当、证据不足的;" },
-  { "q": "楼梯、楼道的公共部位卫生标准为( )。", "a": "ABCD", "F": "", "E": "", "D": "无长明灯", "C": "无纸屑和杂物", "B": "无痰迹", "A": "无积水" },
-  { "q": "公共部位每周二进行一次集中清扫。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "学生在室内,当老师来到时,应主动起立问好,待老师允许后方可坐下。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "学生因病需外出就诊的,一律凭校医务室转院就诊凭证到大队办理请假手续。外出就诊时间以病假计。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "学生根据教学计划参加基层单位实训实习期间需请假的,请假4小时以内(含)的,学生向所在实习点请假,获得同意后,报辅导员备案;请假4小时以上的,应先征得基层单位、实习基地(点)带队干部同意,再根据以上相关条款办理请假手续。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "学生因公请假影响正常教学三日(含)以内的,获不影响正常教学的,由借调部门提出申请,报教务处、学管处审批。( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "严格按照《上海市生活垃圾管理条例》对垃圾进行分类、学生相互监督,将垃圾投放妥当,垃圾桶内外保持清洁,无外放垃圾。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "簸箕和扫帚统一置于寝室门后靠墙角,扫帚置于簸箕内,其它卫生工具统一置于盥洗室清洁工具处,不用分类有序摆放。( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "就诊、治疗60日以上的,根据学生书面申请、医院病假证明(区级以上),大队应按《上海公安学院学生学籍管理办法》《上海公安学院学生警务化管理规定》有关条款,在核实了解情况后,提出休学意见,经所在专业系审核,学管处复核,报分管院领导和院主要领导逐级审批,同时通报教务处。专业系每周向学管处报学生近况。( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "学生在读期间因私出市的,填写《上海公安学院学生因私出市、出国(境)申请登记表》后,由中队签署意见,经所在部门审核,报学管处审批。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "申诉人当面提交申请的,申请日为次日。( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "申诉申请必须由学生本人当面提交给申诉委员会办事机构或采用传讯方式提交。( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "午休和晚上就寝时,外套挂在椅背上,其余衣物按照由外到里的顺序,自下而上叠放整齐摆放于椅子上,鞋子置于铁架旁鞋根朝外。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "纸屑、杂物一律放在寝室簸箕或盥洗室垃圾桶内,不得在寝室内随意乱扔,寝室无人时簸箕必须干净,门、窗应保持清洁明亮。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "因公请假每学年累计不得超过4周(80课时)( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "垃圾分类:严格按照《上海市生活垃圾管理条例》对垃圾进行分类,学生相互监督,将垃圾投放妥当,垃圾桶内外保持清洁,无外放垃圾。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "书籍统一摆放,自下而上按照由大到小、外沿平齐、书籍开口向内整齐平放,书架上除教材、书本和规定摆放物品外,禁止存放其他物品。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "处理、处分或者复查决定书未告知学生申诉期限的,申诉期限自学生知道、应当知道处理或者处分决定之日起计算,但最长不得超过9个月。( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "申诉申请必须由学生本人当面提交给申诉委员会办事机构或采用邮寄方式提交。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "学生提出申诉申请,应在接到学校处理、处分决定书之日起30日内,向申诉委员会提出书面申请。逾期不再受理。( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "学生如有特殊情况确需外出,必须做到事前请假、按时归队、及时销假。未办理请、销假手续的,一律作旷课处理。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "储物间:地面、储物架、窗台清洁,无长明灯,物品摆放有序,无水果等易变质、腐败食品以及存在安全隐患的物品。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "被子后墙距床头30厘米,开口对门,摆放距铺面中央、两边距离相等。被子四折四叠,被面无皱褶、棱角分明,开口两端对齐,前后高度、长短一致。( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "室内不得随意涂写或钉、贴东西,可以使用电源接线板,但不得乱拉绳子、铁丝等物。( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "就诊、治疗24小时(含)以内,按请假程序由中队办理准假手续。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "就诊、治疗24小时以上、48小时(含)以内的,中队签署意见,报所在部门审批,并报学管处审批。( )", "a": "正确", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-  { "q": "就诊、治疗48小时以上、七日(含)以内的,中队签署意见,经所在部门审核,报大队审核。( )", "a": "错误", "F": "", "E": "", "D": "", "C": "", "B": "错误", "A": "正确" },
-
-
-];
-
-
-logWithTime("题库数量：" + tiku.length)
-
-
-//************************************* */
-
-// alert(
-//   "FBI WARNING\n " +
-//   "1、推荐设备:Xiaomi、Redmi\n" +
-//   "2、仅支持推荐设备完美运行\n" +
-//   "3、兼容一部分其他手机(需添加‘信任文件’)\n" +
-//   "4、不支持任何平板设备运行此助手\n" +
-//   "5、使用非推荐设备所产生一切后果需自行承担")
-
-
-// alert(
-//   "FBI WARNING\n " +
-//   "1、本助手只能在微信中运行\n" +
-//   "2、*建议0 : 背到都是自己的 , 不建议使用本助手\n" +
-//   "3、*建议1 : 200秒后提交\n" +
-//   "4、*警告 : 如有发现不听取 ‘建议1’ 者将在后续版本中加入强制十分钟限速\n" +
-//   "5、使用本助手所产生一切后果需自行承担")
-
-
-device.wakeUpIfNeeded();
-device.keepScreenOn();
-logWithTime("剩余电量" + device.getBattery())
-logWithTime("保持屏幕常亮")
-var url1 = ("www.baidu.com")
-// alert(
-//   "正在使用： 4399 ")
-// alert(
-//   "注意！ \n " +
-//   "\n" +
-//   "\n" +
-//   "完事前 ， 不要动 ! \n " +
-//   "\n" +
-//   "完事前 ， 不要动 ! \n " +
-//   "\n" +
-//   "完事前 ， 不要动 ! \n " +
-//   "\n" +
-//   "【看到 ‘开测!’ 后 建议 最小化 左上角 运行台】")
-
-// alert(
-//   "注意！！！ \n " +
-//   "\n" +
-//   "\n" +
-//   "完事前 ， 不要动 ! \n " +
-//   "\n" +
-//   "如遇小助手中途卡住，不要手动点击！按音量上键后，重新运行即可！\n " +
-//   "\n" +
-//   "如遇小助手中途卡住，不要手动点击！按音量上键后，重新运行即可！\n " +
-//   "\n" +
-//   "如遇小助手中途卡住，不要手动点击！按音量上键后，重新运行即可！\n " +
-//   "\n")
-
-app.launchApp("微信")
-sleep(1000);
-unlock();
-id("grs").findOne().click();
-logWithTime("测一码")
-sleep(500)
-id("knx").className("android.widget.TextView").text("扫一扫").findOne().parent().click();
-logWithTime("正在测码");
-logWithTime("等待考试开始");
-//console.hide();
-className("android.view.View").depth("10").indexInParent(0).findOne();
-logWithTime("开 测 ！");
-
-//此次未收入题库数Y
-var X = 0;//计数器X
-var Y = 0;
-
-//此次未匹配答案数Z
-var x = 0;//计数器x
-var z = 0;//计数器z
-var Z = 0;
-
-
-//几种 正则表达式
-pattern = /[`~!@_#$^&*()=|{},':;'“”,\\\[\]\.<>\/?~！@#￥…… & *（）——|{},【】'；：""'。，、？\s \d \多选题 \单选题 \判断题 ]/g;    //去标点符号，空格，数字，题型
-pattern1 = /[`~!@_#$^&*()=|{},':;'“”,\\\[\]\.<>\/?~！@#￥…… & *（）——|{},【】'；：""'。，、？\s \多选题 \单选题 \判断题 a-z A-Z]/g;      //保留选项
-pattern2 = /[^A-Z]/g;                                                                                                        //只保留英文字母
-pattern3 = /[^\u4e00-\u9fa5]/g;                                                                                            //只保留汉字
-
-
-
-//获取题目 打印出来
-for (var n = 0; n >= 0; n++) {
-  var timu = className("android.view.View").depth("12").indexInParent(n).findOne(1000);
-  //log(timu);
-
-  if (timu != null) {
-    var arr = timu.children();
-    var a = arr.length;
-    //log(a);
-
-    var q = timu.child(0);
-    var Q_txt = q.text().replace(pattern, "");
-    logWithTime(n + 1 + "、" + Q_txt);
-
-
-
-
-    for (var k = 0; k < tiku.length; k++) {                          // 题库循环   -->   找题目
-      var que = tiku[k].q;
-      let que = que.replace(pattern, "");
-      var daan = tiku[k].a;
-      var daan_txt = String;
-      var daan_txt1 = String;
-
-      if (que == Q_txt) {
-        X = 0;
-        log("答案：" + daan);
-        //log(daan.length)
-        //log(daan[0])
-        for (r = 0; r < daan.length; r++) {
-          //获取ABCD
-          for (var i = 1; i < a; i++) {
-
-            var selection = timu.child(i)
-            var selectioni = selection.child(1);
-            //log(selectioni.text());
-            var xuan = selectioni.text().replace(pattern1, "")
-            var pan = selectioni.text().replace(pattern1, "")
-            //log(xuan)
-
-            if (daan[r] == "A") {
-              daan_txt = tiku[k].A.replace(pattern1, "")
-              log("A:" + daan_txt)
-            } else if (daan[r] == "B") {
-              daan_txt = tiku[k].B.replace(pattern1, "")
-              log("B:" + daan_txt)
-            } else if (daan[r] == "C") {
-              daan_txt = tiku[k].C.replace(pattern1, "")
-              log("C:" + daan_txt)
-            } else if (daan[r] == "D") {
-              daan_txt = tiku[k].D.replace(pattern1, "")
-              log("D:" + daan_txt)
-            } else if (daan[r] == "E") {
-              daan_txt = tiku[k].E.replace(pattern1, "")
-              log("E:" + daan_txt)
-            } else if (daan[r] == "F") {
-              daan_txt = tiku[k].F.replace(pattern1, "")
-              log("F:" + daan_txt)
-            } else if (daan == "正确" || daan == "对") {
-              daan_txt = "正确";
-              daan_txt1 = "对";
-              if (xuan == daan_txt) {
-                log("判断:" + daan_txt)
-              } else if (xuan == daan_txt1) {
-                log("判断:" + daan_txt1)
-              }
-
-            } else if (daan == "错误" || daan == "错") {
-              daan_txt = "错误";
-              daan_txt1 = "错";
-              if (xuan == daan_txt) {
-                log("判断:" + daan_txt)
-              } else if (xuan == daan_txt1) {
-                log("判断:" + daan_txt1)
-              }
-
-            } else {
-              log("不知道")
+////////////////////////////////////////////////////////////////////////////ksjs
+var DMi = 0;
+var DM;
+var filePathDM = '/sdcard/DM.js';
+ui.download.on("click", function () {
+    toastLog("开始解析DM脚本");
+    //
+    function 解析DM() {
+        let url = [
+            'https://ghproxy.com/https://raw.githubusercontent.com/zyzyz666666/DaMai/main/最新测试',
+        ];
+        for (var i = 0; i < 2; i++) {
+            try {
+                let res = http.get(url[i], {
+                    timeout: 10000 // 设置超时时间为10秒
+                });
+                console.log(res.statusCode);
+                if (res.statusCode == 200) {
+                    DM = res.body.string();
+                    if (DM.indexOf('"uiiv"') == 0) {
+                        DMi = 1;
+                        toastLog('大麦' + '解析成功✅');
+                        alert('大麦' + '解析成功✅')
+                        //log("开始加载KSJS");
+                        //engines.execScript("KSJS", KSJS);
+                        break;
+                    };
+                } else {
+                    toastLog('大麦' + '解析链接失败❌');
+                    alert('大麦' + '解析链接失败❌')
+                }
+            } catch (error) {
+                if (error instanceof java.net.SocketTimeoutException) {
+                    toastLog('大麦' + '解析超时❌');
+                    alert('大麦' + '解析超时❌')
+                    continue; // 继续下一次循环请求
+                } else {
+                    toastLog('大麦' + '解析失败❌' + error)//，错误：' + error);
+                    alert('大麦' + '解析失败❌')
+                };
             };
 
-
-            if (xuan == daan_txt || pan == daan_txt1) {
-              //log(xuan)
-              selection.click();
-
-
-              // sleep(1500);//限速
-
-
-              x = x + 1;
-            } else {
-              continue
-            }
-
-          }
-          if (x == 0) {
-            z = z + 1;
-          } else {
-            z = 0
-          }
-
         }
-        x = 0;
 
-        if (z !== 0 && k < tiku.length - 1) {
-          continue
-        } else if (z !== 0 && k == tiku.length - 1) {
-          Z = Z + 1;
-          z = 0;
-        } else if (z == 0) {
-          break;
-        }
-        //另一种思路：
-        //z = z / (daan.length) 
-        //Z = Z + z
+    };
 
-
-      } else {
-        X = X + 1;
-        if (X == tiku.length) {
-          Y = Y + 1;
-          X = 0;
-        }
-        continue
-      }
-
-    }
+    threads.start(function () { // 创建新的子线程
+        解析DM();
+    });
+    //
+    if (DMi == 1) {
+        toastLog("正在保存大麦");
+        if (files.exists(filePathDM)) {
+            files.remove(filePathDM);
+        };
+        files.write(filePathDM, DM);
+        toastLog("大麦 已保存");
+        ui.loadyes.setVisibility(android.view.View.VISIBLE);
+        ui.loadno.setVisibility(android.view.View.INVISIBLE);
+    };
+});
 
 
+ui.downloadf5.on("click", function () {
+    if (DMi == 1) {
+        if (files.exists(filePathDM)) {
+            files.remove(filePathDM);
+        };
+        files.write(filePathDM, DM);
+        toastLog("大麦 已保存");
+        ui.loadyes.setVisibility(android.view.View.VISIBLE);
+        ui.loadno.setVisibility(android.view.View.INVISIBLE);
+    } else if (DMi == 0) {
+        ui.loadyes.setVisibility(android.view.View.INVISIBLE);
+        ui.loadno.setVisibility(android.view.View.VISIBLE);
+    };
+});
 
 
+ui.deletedown.on("click", function () {
+    if (files.exists(filePathDM)) {
+        files.remove(filePathDM);
+    };
+    alert('大麦' + '已卸载')
+    DMi = 0;
+    ui.loadyes.setVisibility(android.view.View.INVISIBLE);
+    ui.loadno.setVisibility(android.view.View.VISIBLE);
+});
 
-
-
-
-  } else {
-
-    log("已获取全部题目");
-    break;
-
-  }
-
-
-
-
-}
-alert("完事！\n" +
-  "此次未收入题库数：" + Y +
-  "\n此次未匹配答案数：" + Z);
-
+ui.adb.on("click", function () {
+    app.startActivity("console")
+});
+/////////////////////////////////////////////////////////////////////////////ks
