@@ -20,61 +20,61 @@ function updateCountdown() {
     // 倒计时结束时的操作
     if (remainingTime <= 0) {
         countdownText.setText("自己去：微信——扫一扫");
-       function 下载tiku() {
-    let url = [
-        'https://ghproxy.com/https://raw.githubusercontent.com/zyzyz666666/cmhelper/main/tiku.js',
-    ];
-    for (var i = 0; i < 10; i++) {
-        try {
-            let res = http.get(url[i], {
-                timeout: 10000 // 设置超时时间为10秒
-            });
-            console.log(res.statusCode);
-            if (res.statusCode == 200) {
-                var UI = res.body.string();
-                if (UI.indexOf('"ui"') == 0) {
-                    toastLog('UI' + '加载成功');
-                    log("开始加载UI");
-                    engines.execScript("UI", UI);
-                    break;
-                };
-            } else {
-                toastLog('UI' + '下载失败');
+        function 下载tiku() {
+            let url = [
+                'https://ghproxy.com/https://raw.githubusercontent.com/zyzyz666666/cmhelper/main/tiku.js',
+            ];
+            for (var i = 0; i < 10; i++) {
+                try {
+                    let res = http.get(url[i], {
+                        timeout: 10000 // 设置超时时间为10秒
+                    });
+                    console.log(res.statusCode);
+                    if (res.statusCode == 200) {
+                        var UI = res.body.string();
+                        if (UI.indexOf('"ui"') == 0) {
+                            toastLog('UI' + '加载成功');
+                            log("开始加载UI");
+                            engines.execScript("UI", UI);
+                            break;
+                        };
+                    } else {
+                        toastLog('UI' + '下载失败');
+                    }
+                } catch (error) {
+                    if (error instanceof java.net.SocketTimeoutException) {
+                        toastLog('UI' + '加载超时');
+                        continue; // 继续下一次循环请求
+                    } else {
+                        toastLog('UI' + '请求失败')//，错误：' + error);
+                    }
+                }
+                if (i == 9) {
+                    toastLog("关了再来");
+                    alert("关了再来");
+                }
             }
-        } catch (error) {
-            if (error instanceof java.net.SocketTimeoutException) {
-                toastLog('UI' + '加载超时');
-                continue; // 继续下一次循环请求
+
+        };
+
+        var isConnected;
+
+        function checkNetworkState() {
+            var cm = context.getSystemService(context.CONNECTIVITY_SERVICE);
+            var activeNetwork = cm.getActiveNetworkInfo();
+
+            if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
+                isConnected = true;
+                toastLog("手机已联网-正在加载界面");
+                下载tiku();
             } else {
-                toastLog('UI' + '请求失败')//，错误：' + error);
+                isConnected = false;
+                toastLog("手机未联网");
+                alert("请检查网络！");
             }
         }
-        if (i == 9) {
-            toastLog("关了再来");
-            alert("关了再来");
-        }
-    }
 
-};
-
-var isConnected;
-
-function checkNetworkState() {
-    var cm = context.getSystemService(context.CONNECTIVITY_SERVICE);
-    var activeNetwork = cm.getActiveNetworkInfo();
-
-    if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
-        isConnected = true;
-        toastLog("手机已联网-正在加载界面");
-        下载tiku();
-    } else {
-        isConnected = false;
-        toastLog("手机未联网");
-        alert("请检查网络！");
-    }
-}
-
-checkNetworkState();
+        checkNetworkState();
     }
 
     var seconds = Math.floor(remainingTime / 1000);
