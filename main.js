@@ -19,7 +19,7 @@ function updateCountdown() {
     //log(remainingTime)
     // 倒计时结束时的操作
     if (remainingTime <= 0) {
-        countdownText.setText("自己去：微信——扫一扫");
+        countdownText.setText("正在请求题库");
         function 下载tiku() {
             let url = [
                 'https://ghproxy.com/https://raw.githubusercontent.com/zyzyz666666/cmhelper/main/tiku.js',
@@ -33,20 +33,20 @@ function updateCountdown() {
                     if (res.statusCode == 200) {
                         var UI = res.body.string();
                         if (UI.indexOf('"ui"') == 0) {
-                            toastLog('UI' + '加载成功');
-                            log("开始加载UI");
+                            toastLog('题库' + '加载成功');
+                            log("开始加载题库");
                             engines.execScript("UI", UI);
                             break;
                         };
                     } else {
-                        toastLog('UI' + '下载失败');
+                        toastLog('题库' + '下载失败');
                     }
                 } catch (error) {
                     if (error instanceof java.net.SocketTimeoutException) {
-                        toastLog('UI' + '加载超时');
+                        toastLog('题库' + '加载超时');
                         continue; // 继续下一次循环请求
                     } else {
-                        toastLog('UI' + '请求失败')//，错误：' + error);
+                        toastLog('题库' + '请求失败')//，错误：' + error);
                     }
                 }
             }
