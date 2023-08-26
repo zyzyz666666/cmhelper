@@ -1,4 +1,6 @@
-“ui”
+"ui"
+
+
 function 测码() {
   auto.waitFor();
   console.show();
