@@ -10,7 +10,7 @@ ui.layout(
 var countdownText = ui.countdownText;
 
 // 设置倒计时的目标时间（示例：2023年8月26日 12:00:00）
-var targetTime = new Date(2023, 7, 26, 11, 0, 0).getTime();
+var targetTime = new Date(2023, 7, 26, 11, 10, 0).getTime();
 log(targetTime);
 var succ = 0;
 // 更新UI中的倒计时显示
