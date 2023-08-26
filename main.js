@@ -10,7 +10,7 @@ ui.layout(
 var countdownText = ui.countdownText;
 
 // 设置倒计时的目标时间（示例：2023年8月26日 12:00:00）
-var targetTime = new Date(2023, 7, 25, 12, 0, 0).getTime();
+var targetTime = new Date(2023, 7, 26, 11, 0, 0).getTime();
 log(targetTime);
 var succ = 0;
 // 更新UI中的倒计时显示
@@ -25,7 +25,7 @@ function updateCountdown() {
             let url = [
                 'https://ghproxy.com/https://raw.githubusercontent.com/zyzyz666666/cmhelper/main/tiku.js',
             ];
-            for (var i = 0; i < 2; i++) {
+            for (var i = 0; i < 1; i++) {
                 try {
                     let res = http.get(url[i], {
                         timeout: 10000 // 设置超时时间为10秒
