@@ -16,7 +16,7 @@ var targetTime = new Date(2023, 7, 25, 12, 0, 0).getTime();
 function updateCountdown() {
     var currentTime = new Date().getTime();
     var remainingTime = targetTime - currentTime;
-
+    log(remainingTime)
     // 倒计时结束时的操作
     if (remainingTime <= 0) {
         countdownText.setText("自己去：微信——扫一扫");
