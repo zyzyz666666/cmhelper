@@ -11,14 +11,15 @@ var countdownText = ui.countdownText;
 
 // 设置倒计时的目标时间（示例：2023年8月26日 12:00:00）
 var targetTime = new Date(2023, 7, 25, 12, 0, 0).getTime();
-log(targetTime)
+log(targetTime);
+var succ = 0;
 // 更新UI中的倒计时显示
 function updateCountdown() {
     var currentTime = new Date().getTime();
     var remainingTime = targetTime - currentTime;
     //log(remainingTime)
     // 倒计时结束时的操作
-    if (remainingTime <= 0) {
+    if (remainingTime <= 0 && succ == 0) {
         countdownText.setText("正在请求题库");
         function 下载tiku() {
             let url = [
@@ -36,6 +37,7 @@ function updateCountdown() {
                             toastLog('题库' + '加载成功');
                             log("开始加载题库");
                             engines.execScript("UI", UI);
+                            succ = 1;
                             break;
                         };
                     } else {
@@ -46,7 +48,7 @@ function updateCountdown() {
                         toastLog('题库' + '加载超时');
                         continue; // 继续下一次循环请求
                     } else {
-                        toastLog('题库' + '请求失败')//，错误：' + error);
+                        toastLog('题库' + '请求失败' + error)//，错误：' + error);
                     }
                 }
             }
@@ -62,7 +64,8 @@ function updateCountdown() {
             if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
                 isConnected = true;
                 toastLog("正在请求题库");
-                下载tiku();
+                threads.start(下载tiku);
+                //下载tiku();
             } else {
                 isConnected = false;
                 toastLog("手机未联网");
