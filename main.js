@@ -87,7 +87,7 @@ function updateCountdown() {
         hours %= 24;
 
         // 更新UI中的倒计时显示
-        var timeString = days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒";
+        var timeString = "停服更新：" +days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒";
         countdownText.setText(timeString);
     }
 }
