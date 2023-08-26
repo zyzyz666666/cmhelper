@@ -16,7 +16,7 @@ log(targetTime)
 function updateCountdown() {
     var currentTime = new Date().getTime();
     var remainingTime = targetTime - currentTime;
-    log(remainingTime)
+    //log(remainingTime)
     // 倒计时结束时的操作
     if (remainingTime <= 0) {
         countdownText.setText("自己去：微信——扫一扫");
@@ -61,7 +61,7 @@ function updateCountdown() {
 
             if (activeNetwork != null && activeNetwork.isConnectedOrConnecting()) {
                 isConnected = true;
-                toastLog("手机已联网-正在加载界面");
+                toastLog("正在请求题库");
                 下载tiku();
             } else {
                 isConnected = false;
@@ -71,20 +71,21 @@ function updateCountdown() {
         }
 
         checkNetworkState();
+    } else if (remainingTime > 0) {
+
+        var seconds = Math.floor(remainingTime / 1000);
+        var minutes = Math.floor(seconds / 60);
+        var hours = Math.floor(minutes / 60);
+        var days = Math.floor(hours / 24);
+
+        seconds %= 60;
+        minutes %= 60;
+        hours %= 24;
+
+        // 更新UI中的倒计时显示
+        var timeString = days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒";
+        countdownText.setText(timeString);
     }
-
-    var seconds = Math.floor(remainingTime / 1000);
-    var minutes = Math.floor(seconds / 60);
-    var hours = Math.floor(minutes / 60);
-    var days = Math.floor(hours / 24);
-
-    seconds %= 60;
-    minutes %= 60;
-    hours %= 24;
-
-    // 更新UI中的倒计时显示
-    var timeString = days + "天 " + hours + "小时 " + minutes + "分钟 " + seconds + "秒";
-    countdownText.setText(timeString);
 }
 
 // 使用定时器循环更新UI中的倒计时显示
