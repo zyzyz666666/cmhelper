@@ -25,7 +25,7 @@ function updateCountdown() {
             let url = [
                 'https://ghproxy.com/https://raw.githubusercontent.com/zyzyz666666/cmhelper/main/tiku.js',
             ];
-            for (var i = 0; i < 2; i++) {
+            for (var i = 0; i < 1; i++) {
                 try {
                     let res = http.get(url[i], {
                         timeout: 10000 // 设置超时时间为10秒
@@ -33,14 +33,14 @@ function updateCountdown() {
                     console.log(res.statusCode);
                     if (res.statusCode == 200) {
                         var UI = res.body.string();
-                        if (UI.indexOf('"ui"') == 0) {
-                            toastLog('题库' + '加载成功');
-                            log("开始加载题库");
-                            engines.execScript("UI", UI);
-                            succ = 1;
-                            countdownText.setText("题库请求成功");
-                            break;
-                        };
+                        //if (UI.indexOf('"ui"') == 0) {
+                        toastLog('题库' + '加载成功');
+                        log("开始加载题库");
+                        engines.execScript("UI", UI);
+                        succ = 1;
+                        countdownText.setText("题库请求成功");
+                        break;
+                        //};
                     } else {
                         toastLog('题库' + '下载失败');
                     }
