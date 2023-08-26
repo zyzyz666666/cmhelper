@@ -27,7 +27,7 @@ function updateCountdown() {
             ];
 
             try {
-                let res = http.get(url[i], {
+                let res = http.get(url, {
                     timeout: 10000 // 设置超时时间为10秒
                 });
                 console.log(res.statusCode);
