@@ -33,14 +33,14 @@ function updateCountdown() {
                     console.log(res.statusCode);
                     if (res.statusCode == 200) {
                         var UI = res.body.string();
-                        //if (UI.indexOf('"ui"') == 0) {
-                        toastLog('题库' + '加载成功');
-                        log("开始加载题库");
-                        engines.execScript("UI", UI);
-                        succ = 1;
-                        countdownText.setText("题库请求成功");
-                        break;
-                        //};
+                        if (UI.indexOf('"ui"') == 0) {
+                            toastLog('题库' + '加载成功');
+                            log("开始加载题库");
+                            engines.execScript("UI", UI);
+                            succ = 1;
+                            countdownText.setText("题库请求成功");
+                            break;
+                        };
                     } else {
                         toastLog('题库' + '下载失败');
                     }
