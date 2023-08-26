@@ -20,7 +20,7 @@ function updateCountdown() {
     // 倒计时结束时的操作
     if (remainingTime <= 0) {
         countdownText.setText("自己去：微信——扫一扫");
-        exit(); // 结束脚本
+       
     }
 
     var seconds = Math.floor(remainingTime / 1000);
