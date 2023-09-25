@@ -92,4 +92,4 @@ function updateCountdown() {
 }
 
 // 使用定时器循环更新UI中的倒计时显示
-setInterval(updateCountdown, 1000); // 每秒更新一次
+setInterval(updateCountdown, 5000); // 每5秒更新一次
