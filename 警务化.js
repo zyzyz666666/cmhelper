@@ -1,11 +1,11 @@
-var depth = "25"
-
-
-
+"ui"
 
 auto.waitFor();
-console.show();
+var ls = storages.create("ls");
 
+var depth = ls.get("路径")
+console.show();
+log(depth)
 
 //显示当前时分秒
 //function formatDate() {
