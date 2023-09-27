@@ -1,3 +1,3 @@
 "ui";
 
-alert("CNM!服务器给我请求炸了，Author自己都用不了CNM！")
+alert("服务器请求溢出！")
