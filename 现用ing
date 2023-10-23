@@ -1,6 +1,6 @@
 "ui";
 
-var month = "9.5";
+var month = "9";
 var alertmonth = "最新更新："+month+"月题库" + "\n"+ " " +"\n" +"服务器承载有限，卡密限量"
 alert(alertmonth)
 
@@ -19,6 +19,8 @@ ui.layout(
         <button id="check_version" text="检查软件版本" />
 
         <button id="logout" text="退出登录" />
+
+
         <text text = '"软件开放一周，自一周后过期 + "\n " +（没钱续费，白嫖试用）"'/>
     </vertical>
 );
