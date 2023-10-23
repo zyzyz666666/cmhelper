@@ -1,5 +1,9 @@
 "ui";
 
+var month = "9.5";
+var alertmonth = "'已更新'"+month+"'月题库'"
+alert(alertmonth)
+
 var key = ""
 var secret = ""
 
