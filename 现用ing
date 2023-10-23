@@ -770,26 +770,29 @@ ui.expires.click(function () {
 });
 
 ui.sw_notice.click(function () {
-    threads.start(function () {
-        let ret = pjysdk.GetSoftwareNotice()
-        if (ret.code == 0) {
-            toastLog(ret.result.notice);
-        } else {
-            toastLog(ret.message);
-        }
-    });
+    // threads.start(function () {
+    //     let ret = pjysdk.GetSoftwareNotice()
+    //     if (ret.code == 0) {
+    //         toastLog(ret.result.notice);
+    //     } else {
+    //         toastLog(ret.message);
+    //     }
+    // });
+    toastLog("仅供内部学习交流");
 });
+
 
 ui.check_version.click(function () {
     let current_ver = "v1.0.0";  // 写死的当前版本号，每次更新打包软件的时候记得修改
-    threads.start(function () {
-        let ret = pjysdk.GetSoftwareLatestVersion(current_ver)
-        if (ret.code == 0) {
-            toastLog("有新版本：\n" + ret.result.version + "\n" + ret.result.notice + "\n" + ret.result.url);
-        } else {
-            toastLog(ret.message);
-        }
-    });
+    // threads.start(function () {
+    //     let ret = pjysdk.GetSoftwareLatestVersion(current_ver)
+    //     if (ret.code == 0) {
+    //         toastLog("有新版本：\n" + ret.result.version + "\n" + ret.result.notice + "\n" + ret.result.url);
+    //     } else {
+    //         toastLog(ret.message);
+    //     }
+    // });
+    toastLog("已是最新版");
 });
 
 ui.logout.click(function () {
