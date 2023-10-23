@@ -15,8 +15,8 @@ ui.layout(
         <button id="login" text="登录" />
 
         <button id="expires" text="获取过期时间" />
-        {/* <button id="sw_notice" text="获取软件公告" />
-        <button id="check_version" text="检查软件版本" /> */}
+        <button id="sw_notice" text="获取软件公告" />
+        <button id="check_version" text="检查软件版本" />
 
         <button id="logout" text="退出登录" />
 
