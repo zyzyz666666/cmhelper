@@ -22,7 +22,7 @@ ui.layout(
 
         <horizontal w="*" h="1sp" margin="0 10 0 0" bg='#E2E2E2'></horizontal>     //透明条
         <horizontal w="*" h="1sp" margin="0 10 0 0" bg='#E2E2E2'></horizontal>     //透明条
-        <text text = "软件开放一周，一周后过期 + "\n " +（没钱续费，白嫖试用）"/>
+        <text text = "软件开放一周，一周后过期（没钱续费，白嫖试用）"/>
     </vertical>
 );
 
