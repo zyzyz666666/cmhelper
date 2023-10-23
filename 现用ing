@@ -1,7 +1,7 @@
 "ui";
 
 var month = "9.5";
-var alertmonth = "已更新"+month+"月题库" + "\n"+ "" +"\n" +"服务器承载有限，卡密限量"
+var alertmonth = "已更新"+month+"月题库" + "\n"+ " " +"\n" +"服务器承载有限，卡密限量"
 alert(alertmonth)
 
 var key = ""
