@@ -4,8 +4,8 @@ var month = "9";
 var alertmonth = "最新更新："+month+"月题库" + "\n"+ " " +"\n" +"服务器承载有限，卡密限量"
 alert(alertmonth)
 
-var key = "ckr6ce3dqusvntoiojo0"
-var secret = "khGboUPdy1slgm5TxpiA6IreVZwKDDxW"
+var key = "ckv41jjdqust4l35h9cg"
+var secret = "C1tu72rMuRW8Bz6OlECWmtG7O62KZc7x"
 
 
 ui.layout(
