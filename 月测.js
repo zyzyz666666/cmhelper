@@ -697,7 +697,7 @@ for (var n = 0; n >= 0; n++) {
         var a = arr.length;
         //log(a);
 
-        var q = timu.child(0).child(1);//这里后面的child(1)有时候会变
+        var q = timu.child(0).child(timu.child(0).children().length - 1);//这里后面的child(1)有时候会变
         var Q_txt = q.text().replace(pattern, "");
         logWithTime(n + 1 + "、" + Q_txt);
 
