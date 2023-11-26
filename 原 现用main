@@ -21,6 +21,7 @@ ui.layout(
                             <text text="路径： 一般 11/12/15/16/17/24/25/26 都不行自己试其他数字" />
                             <text text="路径： 试不出来问问Author" />
                             <input id="路径" />
+                            <button id="testroad" text="不知道路径的点这里知道" textSize="28sp" bg="#FFFFE0" />
                             <horizontal w="*" h="1sp" margin="0 10 0 0" bg='#E2E2E2'></horizontal>     //透明条
                         </vertical>
                         <button id="start月测" text="Y测" textSize="28sp" />
