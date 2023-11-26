@@ -27,6 +27,23 @@ ui.layout(
                         <button id="start月测" text="Y测" textSize="28sp" />
                         <horizontal w="*" h="1sp" margin="0 10 0 0" bg='#E2E2E2'></horizontal>     //透明条
                         <button id="start警务化" text="J雾化" textSize="28sp" />
+
+                        {/*测试二维码放这里*/}
+                        <vertical id="textcode" >
+                            <horizontal w="*" h="1sp" margin="0 10 0 0" bg='#E2E2E2'></horizontal>     //透明条
+                            <text text="测试二维码" bg="#eef2fb" textSize='20sp' textColor="#000000" />
+                            <linear margin="10 10 10 10" gravity="center_vertical" bg="#eef2fb" padding="10">
+                                {/* <text text="测试二维码" bg="#eef2fb" textSize='20sp' textColor="#000000" /> */}
+                                <img
+                                    src="https://img10.360buyimg.com/img/jfs/t1/192028/25/33459/5661/63fc2af2F1f6ae1b6/d0e4fdc2f126cbf5.png"
+                                    scaleType="fitXY"
+                                    layout_width="180dp"
+                                    layout_height="180dp" />
+                                <text text="1.扫描二维码等待页面加载完毕 -> 2.点击开始自动检测路径" />
+                            </linear>
+                        </vertical>
+                        {/*测试二维码放这里*/}
+
                     </vertical>
                 </ScrollView>
                 {/* <ScrollView>//
@@ -40,6 +57,7 @@ ui.layout(
             </ScrollView> */}
 
             </viewpager>
+
         </vertical>
         {/* <fab id="add" w="auto" h="auto" src="@drawable/ic_vpn_key_black_48dp"
             margin="16" layout_gravity="bottom|right" tint="#ffffff" /> */}
@@ -60,7 +78,7 @@ function Initialize() {
 };
 Initialize()
 
-
+ui.textcode.setVisibility(8);  // 隐藏控件
 
 
 
@@ -69,8 +87,10 @@ Initialize()
 
 ui.testroad.on("click", function () {
 
-//这里写知道路径的代码
-toast("稍后给你")
+    ui.textcode.setVisibility(0);  // 显示控件
+    ui.testroad.setText("按照下述步骤查看");
+    //这里写知道路径的代码
+    toast("如下")
 
 });
 
@@ -101,3 +121,5 @@ ui.start警务化.on("click", function () {
     toastLog("无内容")
 
 });
+
+
