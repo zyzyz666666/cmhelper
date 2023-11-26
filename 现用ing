@@ -1,7 +1,7 @@
 "ui";
 
 var month = "10";
-var alertmonth = "最新更新："+month+"月题库" + "\n"+ " " +"\n" +"服务器承载有限，卡密限量" + "\n"+ " " +"\n" +"使用前先用测试二维码确定自己路径"
+var alertmonth = "最新更新：" + month + "月题库" + "\n" + " " + "\n" + "服务器承载有限，卡密限量" + "\n" + " " + "\n" + "使用前先用测试二维码确定自己路径"
 alert(alertmonth)
 
 var key = "ckv41jjdqust4l35h9cg"
@@ -10,7 +10,7 @@ var secret = "C1tu72rMuRW8Bz6OlECWmtG7O62KZc7x"
 
 ui.layout(
     <vertical padding="16">
-        <text textSize="16sp" textColor="black" text="请输入卡密" />
+        <text id="kami" textSize="16sp" textColor="black" text="请输入卡密" />
         <input id="card" text="" />
         <button id="login" text="登录" />
 
@@ -25,6 +25,18 @@ ui.layout(
     </vertical>
 );
 
+
+/////记住卡密
+var km = storages.create("km");
+// 读取脚本设置
+function Initialize() {
+    if (km.get("kami") != undefined) { ui.kami.setText(km.get("kami")) }
+};
+Initialize()
+
+
+
+/////
 /* ↓ 将PJYSDK.js文件中的代码复制粘贴到下面 ↓ */
 const PJYSDK = (function () {
     function PJYSDK(app_key, app_secret) {
@@ -694,7 +706,7 @@ ui.login.click(function () {
         let login_ret = pjysdk.CardLogin();
         if (login_ret.code == 0) {
             toastLog("登录成功");
-
+            km.put("kami", ui.kami.text());
             ///////////////
             function 下载ui() {
                 let url = [
