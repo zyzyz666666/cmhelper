@@ -35,7 +35,7 @@ ui.layout(
                             <linear margin="10 10 10 10" gravity="center_vertical" bg="#eef2fb" padding="10">
                                 {/* <text text="测试二维码" bg="#eef2fb" textSize='20sp' textColor="#000000" /> */}
                                 <img
-                                    src="https://img10.360buyimg.com/img/jfs/t1/192028/25/33459/5661/63fc2af2F1f6ae1b6/d0e4fdc2f126cbf5.png"
+                                    src='https://github.com/zyzyz666666/cmhelper/assets/114156742/6020ec18-edaa-415b-82e8-01da0e07262b'
                                     scaleType="fitXY"
                                     layout_width="180dp"
                                     layout_height="180dp" />
