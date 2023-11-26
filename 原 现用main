@@ -65,9 +65,17 @@ Initialize()
 
 
 
+///路径//
+
+ui.testroad.on("click", function () {
+
+//这里写知道路径的代码
+toast("稍后给你")
+
+});
 
 
-///发帖//
+///月测//
 
 ui.start月测.on("click", function () {
 
@@ -80,7 +88,7 @@ ui.start月测.on("click", function () {
 
 });
 
-//发帖///
+//警务话///
 
 ui.start警务化.on("click", function () {
 
