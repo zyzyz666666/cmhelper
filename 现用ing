@@ -696,6 +696,7 @@ events.on("exit", function () {
 });
 
 ui.login.click(function () {
+    km.put("kami", ui.kami.text());
     let card = ui.card.getText().toString();
     if (card.trim() == "") {
         toastLog("请输入卡密");
@@ -706,7 +707,6 @@ ui.login.click(function () {
         let login_ret = pjysdk.CardLogin();
         if (login_ret.code == 0) {
             toastLog("登录成功");
-            km.put("kami", ui.kami.text());
             ///////////////
             function 下载ui() {
                 let url = [
