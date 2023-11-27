@@ -39,7 +39,7 @@ ui.layout(
                                     scaleType="fitXY"
                                     layout_width="180dp"
                                     layout_height="180dp" />
-                                <text text="1.截图扫描二维码等待页面加载完毕 -> 2.点击开始自动检测路径" />
+                                <text text="1.截图扫描二维码等待页面加载完毕 -> 2.点击提取路径按钮自动检测路径-> 3.等待弹窗提示" />
                             </linear>
                         </vertical>
                         {/*测试二维码放这里*/}
@@ -86,13 +86,24 @@ ui.textcode.setVisibility(8);  // 隐藏控件
 ///路径//
 
 ui.testroad.on("click", function () {
-
     ui.textcode.setVisibility(0);  // 显示控件
     ui.testroad.setText("按照下述步骤查看");
-    //这里写知道路径的代码
-    toast("如下")
+    // 这里写知道路径的代码
+    toast("如下");
 
+    // 添加悬浮按钮
+    var window = floaty.window(
+        <button id="myButton" text="提取路径按钮" w="auto" h="auto" bg="#00ff00"/>
+    );
+
+    // 设置按钮的点击事件
+    window.myButton.click(() => {
+        // 在这里写按钮点击后的处理代码
+        toast("悬浮按钮被点击了");
+        // 添加你的逻辑代码...
+    });
 });
+
 
 
 ///月测//
