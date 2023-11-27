@@ -111,7 +111,7 @@ ui.testroad.on("click", function () {
 
     // 延迟一段时间后设置第二个按钮的位置为右上角
     setTimeout(() => {
-        window2.setPosition(device.width - window2.getWidth(), 0);
+        window2.setPosition(window1.getWidth(), 0);
     }, 200);  // 延迟200毫秒，可以根据实际情况调整
 
     // 设置第二个按钮的点击事件
