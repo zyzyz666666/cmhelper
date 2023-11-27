@@ -10,7 +10,7 @@ var secret = "VdZTnL5oEI1wE6Ix41fDkt68SMOFGWwR"
 
 ui.layout(
     <vertical padding="16">
-        <text id="kami" textSize="16sp" textColor="black" text="请输入卡密" />
+        <text  textSize="16sp" textColor="black" text="请输入卡密" />
         <input id="card" text="" />
         <button id="login" text="登录" />
 
@@ -30,7 +30,7 @@ ui.layout(
 var km = storages.create("km");
 // 读取脚本设置
 function Initialize() {
-    if (km.get("kami") != undefined) { ui.kami.setText(km.get("kami")) }
+    if (km.get("kami") != undefined) { ui.card.setText(km.get("kami")) }
 };
 Initialize()
 
@@ -696,7 +696,7 @@ events.on("exit", function () {
 });
 
 ui.login.click(function () {
-    km.put("kami", ui.kami.text());
+    km.put("kami", ui.card.text());
     let card = ui.card.getText().toString();
     if (card.trim() == "") {
         toastLog("请输入卡密");
