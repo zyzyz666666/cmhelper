@@ -93,7 +93,7 @@ ui.testroad.on("click", function () {
 
     // 添加第一个悬浮按钮（左上角）
     var window1 = floaty.window(
-        <button id="myButton1" text="悬浮按钮1" w="auto" h="auto" bg="#00ff00"/>
+        <button id="myButton1" text="悬浮按钮1" w="auto" h="auto" bg="#00ff00" />
     );
     window1.setPosition(0, 0);  // 设置左上角按钮位置
 
@@ -102,11 +102,17 @@ ui.testroad.on("click", function () {
         // 在这里写按钮点击后的处理代码
         toast("正在检测路径");
         // 添加你的逻辑代码...
+        var div = idContains("").findOne(10000);
+        if (div) {
+            toastLog("")
+        } else {
+            toastLog("")
+        }
     });
 
     // 添加第二个悬浮按钮（右上角）
     window2 = floaty.window(
-        <button id="myButton2" text="悬浮按钮2" w="auto" h="auto" bg="#ff0000"/>
+        <button id="myButton2" text="悬浮按钮2" w="auto" h="auto" bg="#ff0000" />
     );
 
     // 延迟一段时间后设置第二个按钮的位置为右上角
@@ -115,7 +121,7 @@ ui.testroad.on("click", function () {
     }, 200);  // 延迟200毫秒，可以根据实际情况调整
 
     // 设置第二个按钮的点击事件
-    window2.myButton2.click(() => {    
+    window2.myButton2.click(() => {
         // 关闭悬浮窗口
         window1.close();
         window2.close();
