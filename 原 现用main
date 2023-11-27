@@ -102,12 +102,17 @@ ui.testroad.on("click", function () {
         // 在这里写按钮点击后的处理代码
         toast("正在检测路径");
         // 添加你的逻辑代码...
-        var div = idContains("").findOne(10000);
-        if (div) {
-            toastLog("")
-        } else {
-            toastLog("")
-        }
+        var b = idContains("div").find();
+ log(b.length)
+ for(i=0;i<b.length;i++){
+     log(b[i].id());
+     if(b[i].id()=="div1"){
+         toastLog(b[i].depth())
+         alert("本设备路径应为:"+b[i].depth())
+         break;
+         }
+     }
+     
     });
 
     // 添加第二个悬浮按钮（右上角）
